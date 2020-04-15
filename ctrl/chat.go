@@ -171,6 +171,7 @@ func dispatch(data []byte) {
 	case model.CMD_SINGLE_MSG:
 		// 单聊
 		sendMsg(msg.Dstid, data)
+		//TODO 添加聊天记录
 		go AddMessagesChat(msg)
 	case model.CMD_ROOM_MSG:
 		// 群聊
@@ -180,6 +181,8 @@ func dispatch(data []byte) {
 				v.DataQueue <- data
 			}
 		}
+		//TODO 添加聊天记录
+		go AddMessagesChat(msg)
 	case model.CMD_QUIT:
 		//	退出
 		DelClientMapID(msg.Userid)
@@ -230,6 +233,9 @@ func DelClientMapID(userId int64) {
 // 添加记录
 func AddMessagesChat(msg model.Message) {
 	var messageService server.MessageService
+	if msg.Userid == 0 {
+		return
+	}
 	err := messageService.AddMessage(msg.Userid, msg.Cmd, msg.Dstid, msg.Media, msg.Content, msg.Pic, msg.Url, msg.Memo, msg.Amount, msg.Type, msg.Username, msg.Face)
 	if err != nil {
 		log.SetFlags(log.Llongfile | log.Lmicroseconds | log.Ldate)

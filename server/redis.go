@@ -1,32 +1,30 @@
 package server
 
-//
-//import (
-//	"log"
-//	"net/http"
-//	"reptile-go/util"
-//	"time"
-//
-//	"github.com/go-redis/redis"
-//
-//	"github.com/gin-gonic/gin"
-//)
-//
-//var Client *redis.Client
-//
-//func init() {
-//	Client = redis.NewClient(&redis.Options{
-//		Addr:         "127.0.0.1:6379",
-//		PoolSize:     1000, // 池子
-//		ReadTimeout:  time.Millisecond * time.Duration(100),
-//		WriteTimeout: time.Millisecond * time.Duration(100),
-//		IdleTimeout:  time.Millisecond * time.Duration(60), // 空闲超时
-//	})
-//	_, err := Client.Ping().Result()
-//	if err != nil {
-//		panic("init redis error")
-//	}
-//}
+import (
+	"fmt"
+	"time"
+
+	"github.com/go-redis/redis"
+)
+
+var redisClient *redis.Client
+
+func init() {
+	redisClient = redis.NewClient(&redis.Options{
+		Addr:         "127.0.0.1:6379",
+		Password:     "foobared",
+		PoolSize:     1000, // 池子
+		ReadTimeout:  time.Millisecond * time.Duration(100),
+		WriteTimeout: time.Millisecond * time.Duration(100),
+		IdleTimeout:  time.Millisecond * time.Duration(60), // 空闲超时
+	})
+	_, err := redisClient.Ping().Result()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("redis init data base ok")
+}
+
 //func get(key string) (string, bool) {
 //	r, err := Client.Get(key).Result()
 //	if err != nil {

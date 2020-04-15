@@ -18,14 +18,11 @@ type Message struct {
 }
 
 const (
-	//点对点单聊,dstid是用户ID
-	CMD_SINGLE_MSG = 10
-	//群聊消息,dstid是群id
-	CMD_ROOM_MSG = 11
-	//心跳消息,不处理
-	CMD_HEART = 0
-	//	退出
-	CMD_QUIT = 1
+	CMD_SINGLE_MSG = 10 // 点对点单聊,dstid是用户ID
+	CMD_ROOM_MSG   = 11 // 群聊消息,dstid是群id
+	CMD_HEART      = 0  // 心跳消息,不处理
+	CMD_LOGIN      = 1  // 登录
+	CMD_QUIT       = 2  // 退出
 )
 
 const (

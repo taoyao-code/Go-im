@@ -12,12 +12,13 @@
 - 添加好友
 - 创建群/加入群
 - 七牛云对象存储
+- 消息持久化
 
 
 ## 使用说明
 - 1、安装数据库
 - 2、创建数据库
-- 3、在跟目录下创建config目录，创建config.yaml文件进行数据配置
+- 3、在根目录下创建config目录，创建config.yaml文件进行数据配置
 ```
 mysql:
   username: xxxx
@@ -25,7 +26,7 @@ mysql:
   host: xxxx
   port: xxxx
   dbname: xxx
-qiniu:
+qiniu: #七牛云配置
   QINIU_DOMAIN: xxx
   QINIU_ACCESS_KEY: xxxx
   QINIU_SECRET_KEY: xxxxx

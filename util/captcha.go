@@ -37,9 +37,9 @@ func GenerateCaptchaHandler(w http.ResponseWriter, r *http.Request) {
 
 	cap := base64Captcha.NewCaptcha(driver, store)
 	id, b64s, err := cap.Generate()
-	body := map[string]interface{}{"code": 200, "data": b64s, "id": id, "msg": "success"}
+	body := map[string]interface{}{"code": 0, "data": b64s, "id": id, "msg": "success"}
 	if err != nil {
-		body = map[string]interface{}{"code": 0, "msg": err.Error()}
+		body = map[string]interface{}{"code": -1, "msg": err.Error()}
 	}
 	ret, err := json.Marshal(body)
 	if err != nil {

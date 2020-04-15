@@ -39,7 +39,7 @@ func init() {
 	err := errors.New("")
 	DbEngin, err = xorm.NewEngine(driveName, DsName)
 	if nil != err && "" != err.Error() {
-		log.Fatal(err.Error())
+		panic(err.Error())
 	}
 	// 是否显示SQL语句
 	DbEngin.ShowSQL(true)

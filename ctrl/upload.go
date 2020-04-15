@@ -87,12 +87,13 @@ func UploadLocal(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	filename := fmt.Sprintf("%d%04d%s", time.Now().Unix(), rand.Int31(), suffix)
-	dstfile, err := os.Create("./mnt/" + filename)
+	//	TODO 将文件路径转换成url地址
+	urlFileName := "mnt/" + filename
+	dstfile, err := os.Create(urlFileName)
 	if err != nil {
 		util.RespFail(w, err.Error())
 		return
 	}
-
 	//  TODO 将源文件内容copy到新文件
 	_, err = io.Copy(dstfile, srcfile)
 	if err != nil {
@@ -100,15 +101,13 @@ func UploadLocal(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	dstfile.Close()
-	//	TODO 将文件路径转换成url地址
-	url := "mnt/" + filename
 	var qn server.UploadTokenService
-	qiniuUrl, err := qn.UploadQiNiuYun(url, url)
+	qiniuUrl, err := qn.UploadQiNiuYun(urlFileName, urlFileName)
 	if err != nil {
 		util.RespFail(w, "OSS错误")
 		return
 	}
-	err = os.Remove(url)
+	err = os.Remove(urlFileName)
 	if err != nil {
 
 	}

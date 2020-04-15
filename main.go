@@ -38,10 +38,12 @@ func handleFunc() {
 	http.HandleFunc("/contact/joincommunity", cors(ctrl.JoinCommunity))     // 添加群
 	http.HandleFunc("/contact/loadcommunity", cors(ctrl.LoadCommunity))     // 获取群列表
 
-	http.HandleFunc("/chat", cors(ctrl.Chat))            // ws
-	http.HandleFunc("/attach/upload", cors(ctrl.Upload)) //上传文件
-
+	http.HandleFunc("/chat", cors(ctrl.Chat))                      // ws
+	http.HandleFunc("/attach/upload", cors(ctrl.Upload))           //上传文件
 	http.HandleFunc("/user/updateUser", cors(ctrl.UpdateUserInfo)) // 更新用户数据
+
+	// 记录
+	http.HandleFunc("/message/chathistory", cors(ctrl.ChatHistory)) // 获取聊天记录
 
 	RegisterView()
 

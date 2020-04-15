@@ -17,11 +17,9 @@ func Bind(req *http.Request, obj interface{}) error {
 	contentType := req.Header.Get("Content-Type")
 	//如果是简单的json
 	if strings.Contains(strings.ToLower(contentType), "application/json") {
-		fmt.Println(1)
 		return BindJson(req, obj)
 	}
 	if strings.Contains(strings.ToLower(contentType), "application/x-www-form-urlencoded") {
-		fmt.Println(2)
 		return BindForm(req, obj)
 	}
 	return errors.New("当前方法暂不支持")

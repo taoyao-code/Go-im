@@ -27,7 +27,7 @@ type PageArg struct {
 
 func (p *PageArg) GetPageSize() int {
 	if p.Pagesize == 0 {
-		return 100
+		return 20
 	} else {
 		return p.Pagesize
 	}
@@ -37,7 +37,8 @@ func (p *PageArg) GetPageFrom() int {
 	if p.Pagefrom < 0 {
 		return 0
 	} else {
-		return p.Pagefrom
+		//return p.Pagefrom
+		return (p.Pagefrom - 1) * p.Pagesize
 	}
 }
 
