@@ -5,7 +5,6 @@ import (
 
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"reflect"
 	"strconv"
@@ -36,7 +35,6 @@ func BindJson(req *http.Request, obj interface{}) error {
 
 func BindForm(req *http.Request, ptr interface{}) error {
 	req.ParseForm()
-	fmt.Println(req.Form.Encode())
 	err := mapForm(ptr, req.Form)
 	return err
 }
@@ -53,7 +51,6 @@ func mapForm(ptr interface{}, form map[string][]string) error {
 		if !structField.CanSet() {
 			continue
 		}
-
 		structFieldKind := structField.Kind()
 		inputFieldName := typeField.Tag.Get("form")
 		if inputFieldName == "" {

@@ -9,6 +9,7 @@ import (
 	"reptile-go/server"
 	"strconv"
 	"sync"
+	"time"
 
 	"github.com/gorilla/websocket"
 	"gopkg.in/fatih/set.v0"
@@ -91,9 +92,7 @@ func Chat(w http.ResponseWriter, r *http.Request) {
 	//isvalida=false
 	conn, err := (&websocket.Upgrader{
 		CheckOrigin: func(r *http.Request) bool {
-			fmt.Println(isvalida)
-			return true
-			//return isvalida
+			return isvalida
 		},
 	}).Upgrade(w, r, nil)
 	if err != nil {
@@ -172,7 +171,10 @@ func dispatch(data []byte) {
 		// 单聊
 		sendMsg(msg.Dstid, data)
 		//TODO 添加聊天记录
-		go AddMessagesChat(msg)
+		// 例如key: chat_10_uid_1_tid_2
+		//server.Rpush("chat_10_uid_"+strconv.FormatInt(msg.Userid, 10)+"_tid_"+strconv.FormatInt(msg.Dstid, 10), data)
+		server.Rpush("chat_10", data)
+		//go AddMessagesChat(msg)
 	case model.CMD_ROOM_MSG:
 		// 群聊
 		// TODO 群聊转发逻辑
@@ -182,7 +184,9 @@ func dispatch(data []byte) {
 			}
 		}
 		//TODO 添加聊天记录
-		go AddMessagesChat(msg)
+		//server.Rpush("chat_11_dstid_"+strconv.FormatInt(msg.Dstid, 10), data)
+		server.Rpush("chat_11", data)
+		//go AddMessagesChat(msg)
 	case model.CMD_QUIT:
 		//	退出
 		DelClientMapID(msg.Userid)
@@ -241,4 +245,67 @@ func AddMessagesChat(msg model.Message) {
 		log.SetFlags(log.Llongfile | log.Lmicroseconds | log.Ldate)
 		log.Printf(err.Error())
 	}
+}
+
+// 从redis队列中取出数据
+func GetLRangeMessage(key string, start, stop int64) {
+	lRange, b2 := server.LRange(key, start, stop)
+	if b2 {
+		fmt.Println(lRange)
+	} else {
+		fmt.Println("lRange: is not")
+	}
+}
+
+// 定时器
+// 定时从redis中取出数据
+func TickGetRedisLPop() {
+	// 创建一个计时器
+	var msg model.Message
+	var message server.MessageService
+	timeTickerChan := time.Tick(time.Second * 600)
+	for {
+		lRange, b2 := server.LRange("chat_10", 0, -1)
+		if b2 {
+			msgList := make([]model.Message, 0)
+			for _, data := range lRange {
+				json.Unmarshal([]byte(data), &msg)
+				if msg.Userid != 0 {
+					server.Lpop("chat_10")
+					msg.Createat = time.Now().Unix()
+					msgList = append(msgList, msg)
+				}
+			}
+			if len(msgList) > 0 {
+				message.AddMessageList(msgList)
+			}
+			//AddMessagesChat(msg)
+		} else {
+			fmt.Println("lRange: is not")
+		}
+		// 群
+		lRange, b2 = server.LRange("chat_11", 0, -1)
+		if b2 {
+			msgList := make([]model.Message, 0)
+			for _, data := range lRange {
+				json.Unmarshal([]byte(data), &msg)
+				if msg.Userid != 0 {
+					server.Lpop("chat_11")
+					msg.Createat = time.Now().Unix()
+					msgList = append(msgList, msg)
+				}
+			}
+			if len(msgList) > 0 {
+				message.AddMessageList(msgList)
+			}
+			//AddMessagesChat(msg)
+		} else {
+			fmt.Println("lRange: is not")
+		}
+		<-timeTickerChan
+	}
+}
+func init() {
+	fmt.Println("redis timing LPop")
+	//go TickGetRedisLPop()
 }

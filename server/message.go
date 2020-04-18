@@ -34,6 +34,15 @@ func (service *MessageService) AddMessage(
 	return nil
 }
 
+// 添加列表数据
+func (service *MessageService) AddMessageList(msg []model.Message) error {
+	_, err := DbEngin.Insert(&msg)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 //获取聊天记录
 func (service *MessageService) GetChatHistory(userId, dstId int64, cmd, pageForm, pageSize int) []model.Message {
 	message := make([]model.Message, 0)
