@@ -25,7 +25,7 @@ func RegisterView() {
 
 func handleFunc() {
 	// 1. 提供静态资源目录支持
-	http.Handle("/asset/", http.FileServer(http.Dir(".")))
+	//http.Handle("/asset/", http.FileServer(http.Dir(".")))
 	http.Handle("/mnt/", http.FileServer(http.Dir(".")))
 	// 绑定请求的处理函数
 	http.HandleFunc("/getCaptcha", cors(ctrl.GetCaptcha))         // 获取验证码
@@ -41,33 +41,13 @@ func handleFunc() {
 	http.HandleFunc("/chat", cors(ctrl.Chat))                      // ws
 	http.HandleFunc("/attach/upload", cors(ctrl.Upload))           //上传文件
 	http.HandleFunc("/user/updateUser", cors(ctrl.UpdateUserInfo)) // 更新用户数据
-
 	// 记录
 	http.HandleFunc("/message/chathistory", cors(ctrl.ChatHistory)) // 获取聊天记录
 
-	RegisterView()
+	//RegisterView()
 
 	//	https://www.hi-linux.com/posts/42176.html 配置反向代理
 }
-
-//func handleFunc() {
-//	// 1. 提供静态资源目录支持
-//	http.Handle("/asset/", http.FileServer(http.Dir(".")))
-//	http.Handle("/mnt/", http.FileServer(http.Dir(".")))
-//	// 绑定请求的处理函数
-//	http.HandleFunc("/user/register", ctrl.UserRegister)          // 注册
-//	http.HandleFunc("/user/login", ctrl.UserLogin)                // 登录
-//	http.HandleFunc("/contact/addfriend", ctrl.Addfriend)         // 添加好友
-//	http.HandleFunc("/contact/loadfriend", ctrl.LoadFriend) // 加载好友列表
-//
-//	http.HandleFunc("/contact/createcommunity", ctrl.CreateCommunity) // 创建群
-//	http.HandleFunc("/contact/joincommunity", ctrl.JoinCommunity)     // 添加群
-//	http.HandleFunc("/contact/loadcommunity", ctrl.LoadCommunity)     // 获取群列表
-//
-//	http.HandleFunc("/chat", ctrl.Chat)      // ws
-//	http.HandleFunc("/attach/upload", ctrl.Upload) //上传文件
-//	RegisterView()
-//}
 
 func cors(f http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {

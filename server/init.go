@@ -16,7 +16,7 @@ var DbEngin *xorm.Engine
 
 func init() {
 	// 读取yaml配置文件
-	viper.SetConfigName("config1")
+	viper.SetConfigName("config")
 	// 设置配置文件的搜索目录
 	viper.AddConfigPath("./config/")
 	if err := viper.ReadInConfig(); err != nil {

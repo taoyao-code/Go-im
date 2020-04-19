@@ -17,7 +17,8 @@
 .idea
 view/*
 asset/*
-config/config1.yaml
+config/config.yaml
 mnt/*
+reptile-go
 tmp
 流程.md

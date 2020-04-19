@@ -32,12 +32,16 @@ qiniu: #七牛云配置
   QINIU_ACCESS_KEY: xxxx
   QINIU_SECRET_KEY: xxxxx
   QINIU_TEST_BUCKET: xxxxx
+redis: # redis
+  host: 127.0.0.1:6379
+  port: 6379
+  password: 
 ```
 - 4、根目录下运行：go build
 - 5、运行生成的文件
 
 ## 说明
-前端文件
+[前端文件](https://github.com/ltsj404/chat-im.git)
 ```shell script
 https://github.com/ltsj404/chat-im.git
 ```

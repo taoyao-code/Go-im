@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/spf13/viper"
+
 	"github.com/go-redis/redis"
 )
 
@@ -11,8 +13,8 @@ var Client *redis.Client
 
 func init() {
 	Client = redis.NewClient(&redis.Options{
-		Addr:         "127.0.0.1:6379",
-		Password:     "foobared",
+		Addr:         viper.GetString(`redis.host`),
+		Password:     viper.GetString(`redis.password`),
 		PoolSize:     1000, // 池子
 		ReadTimeout:  time.Millisecond * time.Duration(100),
 		WriteTimeout: time.Millisecond * time.Duration(100),
