@@ -18,6 +18,7 @@ type Message struct {
 }
 
 const (
+	CMD_NEW_FRIEND = 9  // 通知好友，有新朋友添加
 	CMD_SINGLE_MSG = 10 // 点对点单聊,dstid是用户ID
 	CMD_ROOM_MSG   = 11 // 群聊消息,dstid是群id
 	CMD_HEART      = 0  // 心跳消息,不处理

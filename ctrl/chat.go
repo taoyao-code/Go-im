@@ -142,7 +142,9 @@ func dispatch(data []byte) {
 	case model.CMD_QUIT:
 		//	退出
 		DelClientMapID(msg.Userid)
-
+	case model.CMD_NEW_FRIEND:
+		// 通知新朋友添加
+		sendMsg(msg.Dstid, data)
 	}
 }
 
