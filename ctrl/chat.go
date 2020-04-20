@@ -83,7 +83,8 @@ func sendproc(node *Node) {
 				log.Printf(err.Error())
 				return
 			}
-		default:
+			//default:
+			//	continue
 		}
 	}
 }
