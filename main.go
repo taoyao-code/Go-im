@@ -26,6 +26,8 @@ func RegisterView() {
 func handleFunc() {
 	// 1. 提供静态资源目录支持
 	//http.Handle("/asset/", http.FileServer(http.Dir(".")))
+	http.Handle("/apidoc/", http.FileServer(http.Dir(".")))
+
 	http.Handle("/mnt/", http.FileServer(http.Dir(".")))
 	// 绑定请求的处理函数
 	http.HandleFunc("/getCaptcha", cors(ctrl.GetCaptcha))         // 获取验证码
@@ -63,7 +65,6 @@ func cors(f http.HandlerFunc) http.HandlerFunc {
 		f(w, r)
 	}
 }
-
 func main() {
 	handleFunc()
 	http.ListenAndServe(":8081", nil)

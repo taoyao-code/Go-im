@@ -25,7 +25,7 @@ func (s *UserService) Register(mobile, plainpwd, nickname, avatar, sex string) (
 	}
 	// 如果存在则返回提示已注册
 	if tmp.Id > 0 {
-		return tmp, errors.New("该手机号已经注册")
+		return tmp, errors.New("该账号已经注册")
 	}
 	//否则插入数据
 	tmp.Mobile = mobile
