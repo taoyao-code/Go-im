@@ -3,6 +3,7 @@ module reptile-go
 go 1.13
 
 require (
+	github.com/aliyun/alibaba-cloud-sdk-go v1.61.124 // indirect
 	github.com/cosmtrek/air v1.12.1 // indirect
 	github.com/dchest/captcha v0.0.0-20170622155422-6a29415a8364 // indirect
 	github.com/fatih/color v1.9.0 // indirect

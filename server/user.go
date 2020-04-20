@@ -35,6 +35,8 @@ func (s *UserService) Register(mobile, plainpwd, nickname, avatar, sex string) (
 	tmp.Salt = fmt.Sprintf("%06d", rand.Int31n(10000))
 	tmp.Passwd = util.MakePasswd(plainpwd, tmp.Salt)
 	tmp.Createat = time.Now()
+	//头像
+	tmp.Avatar = "http://doc.bo5.xyz/h5/static/img/user.png"
 	// token 随机数
 	tmp.Token = fmt.Sprintf("%08d", rand.Int31())
 	// 插入数据

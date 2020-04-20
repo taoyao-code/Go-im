@@ -90,6 +90,7 @@ func sendproc(node *Node) {
 
 // 接收协程(读)
 func recvproc(node *Node) {
+	defer node.Conn.Close()
 	for {
 		_, data, err := node.Conn.ReadMessage()
 		if err != nil {
@@ -252,10 +253,13 @@ func TickGetRedisLPop() {
 		} else {
 			fmt.Println("lRange: is not")
 		}
+		log.SetFlags(log.Llongfile | log.Lmicroseconds | log.Ldate)
+		log.Printf("定时打开，请关闭这个")
 		<-timeTickerChan
 	}
 }
-func init() {
-	fmt.Println("redis timing LPop")
-	//go TickGetRedisLPop()
-}
+
+//func init() {
+//	fmt.Println("redis timing LPop")
+//	//go TickGetRedisLPop()
+//}

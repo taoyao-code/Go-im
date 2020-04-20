@@ -20,5 +20,8 @@ asset/*
 config/config.yaml
 mnt/*
 reptile-go
+stopPort.sh
+startPort.sh
 tmp
+update.md
 流程.md
