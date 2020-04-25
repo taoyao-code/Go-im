@@ -23,11 +23,28 @@ func init() {
 	os.MkdirAll("./mnt", os.ModePerm)
 }
 
-// 上传文件
-func Upload(w http.ResponseWriter, r *http.Request) {
-	UploadLocal(w, r)
+/**
+@api {post} /attach/upload 上传文件
+@apiName 上传文件
+@apiGroup upload
+@apiParam {Object} file 文件
+@apiSuccessExample Success-Response:
+HTTP/1.1 200 OK
+{
+	"code": 0,
+	"data": "文件地址",
+	"msg": ""
 }
+@apiError UserNotFound The id of the User was not found.
 
+@apiErrorExample Error-Response:
+HTTP/1.1 404 Not Found
+{
+	"code": -1,
+	"msg": "xxx"
+}
+@apiUse CommonError
+*/
 func UploadLocal(w http.ResponseWriter, r *http.Request) {
 	//	TODO 获取上传的资源
 	srcfile, head, err := r.FormFile("file")

@@ -13,13 +13,38 @@ import (
 var messageService server.MessageService
 
 // 获取消息记录
+/**
+@api {post} /message/chathistory 获取消息记录
+@apiName 消息记录
+@apiGroup 聊天消息
+
+@apiParam {Number} userid 用户ID
+@apiParam {Number} dstid 好友ID/群ID
+@apiParam {Number} cmd 单/群聊
+
+@apiSuccessExample Success-Response:
+HTTP/1.1 200 OK
+{
+	"code": 0,
+	"data": "",
+	"msg": "xxx"
+}
+
+@apiErrorExample Error-Response:
+HTTP/1.1 404 Not Found
+{
+	"code": -1,
+	"msg": "xxx"
+}
+@apiUse CommonError
+*/
 func ChatHistory(w http.ResponseWriter, r *http.Request) {
 	var arg args.ContactArg
 	util.Bind(r, &arg)
-	if arg.Userid == 0 {
-		util.RespOkList(w, nil, 0)
+	if arg.Userid == 0 || arg.Dstid == 0 || arg.Cmd == 0 {
+		util.RespFail(w, "参数错误")
+		return
 	}
-
 	var chat string
 	if arg.Cmd == model.CMD_ROOM_MSG {
 		chat = "chat_11"

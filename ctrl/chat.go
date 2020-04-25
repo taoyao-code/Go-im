@@ -3,13 +3,14 @@ package ctrl
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"reptile-go/model"
 	"reptile-go/server"
 	"strconv"
 	"sync"
 	"time"
+
+	"github.com/sirupsen/logrus"
 
 	"github.com/gorilla/websocket"
 	"gopkg.in/fatih/set.v0"
@@ -27,6 +28,8 @@ var clientMap = make(map[int64]*Node, 0)
 
 // 读写锁
 var rwlocker sync.RWMutex
+
+var log = logrus.New()
 
 // ws://ip/chat?id=1&token=xxxx
 func Chat(w http.ResponseWriter, r *http.Request) {
@@ -46,8 +49,10 @@ func Chat(w http.ResponseWriter, r *http.Request) {
 		},
 	}).Upgrade(w, r, nil)
 	if err != nil {
-		log.SetFlags(log.Llongfile | log.Lmicroseconds | log.Ldate)
-		log.Printf(err.Error())
+		log.WithFields(logrus.Fields{
+			"animal": "walrus",
+			"size":   10,
+		}).Warn(err.Error())
 		return
 	}
 	//	TODO 获得 conn
@@ -79,8 +84,10 @@ func sendproc(node *Node) {
 		case data := <-node.DataQueue:
 			err := node.Conn.WriteMessage(websocket.TextMessage, data)
 			if err != nil {
-				log.SetFlags(log.Llongfile | log.Lmicroseconds | log.Ldate)
-				log.Printf(err.Error())
+				log.WithFields(logrus.Fields{
+					"animal": "walrus",
+					"size":   10,
+				}).Warn(err.Error())
 				return
 			}
 			//default:
@@ -95,8 +102,10 @@ func recvproc(node *Node) {
 	for {
 		_, data, err := node.Conn.ReadMessage()
 		if err != nil {
-			log.SetFlags(log.Llongfile | log.Lmicroseconds | log.Ldate)
-			log.Printf(err.Error())
+			log.WithFields(logrus.Fields{
+				"animal": "walrus",
+				"size":   10,
+			}).Warn(err.Error())
 			return
 		}
 		// todo 对data进一步处理
@@ -111,8 +120,10 @@ func dispatch(data []byte) {
 	msg := model.Message{}
 	err := json.Unmarshal(data, &msg)
 	if err != nil {
-		log.SetFlags(log.Llongfile | log.Lmicroseconds | log.Ldate)
-		log.Printf(err.Error())
+		log.WithFields(logrus.Fields{
+			"animal": "walrus",
+			"size":   10,
+		}).Warn(err.Error())
 		return
 	}
 	// TODO 根据cmd对逻辑进行处理
@@ -196,8 +207,10 @@ func AddMessagesChat(msg model.Message) {
 	}
 	err := messageService.AddMessage(msg.Userid, msg.Cmd, msg.Dstid, msg.Media, msg.Content, msg.Pic, msg.Url, msg.Memo, msg.Amount, msg.Type, msg.Username, msg.Face)
 	if err != nil {
-		log.SetFlags(log.Llongfile | log.Lmicroseconds | log.Ldate)
-		log.Printf(err.Error())
+		log.WithFields(logrus.Fields{
+			"animal": "walrus",
+			"size":   10,
+		}).Warn(err.Error())
 	}
 }
 
@@ -256,7 +269,10 @@ func TickGetRedisLPop() {
 		} else {
 			fmt.Println("lRange: is not")
 		}
-		log.SetFlags(log.Llongfile | log.Lmicroseconds | log.Ldate)
+		log.WithFields(logrus.Fields{
+			"animal": "walrus",
+			"size":   10,
+		}).Warn("定时打开，请关闭这个")
 		log.Printf("定时打开，请关闭这个")
 		<-timeTickerChan
 	}

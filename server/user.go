@@ -7,6 +7,8 @@ import (
 	"reptile-go/model"
 	"reptile-go/util"
 	"time"
+
+	"github.com/prometheus/common/log"
 )
 
 type UserService struct {
@@ -41,6 +43,7 @@ func (s *UserService) Register(mobile, plainpwd, nickname, avatar, sex string) (
 	tmp.Token = fmt.Sprintf("%08d", rand.Int31())
 	// 插入数据
 	_, err = DbEngin.InsertOne(&tmp)
+	log.Warn()
 	//返回新用户信息
 	return tmp, err
 }

@@ -2,20 +2,12 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"time"
-
-	"github.com/spf13/viper"
 
 	"github.com/qiniu/api.v7/v7/auth"
 	"github.com/qiniu/api.v7/v7/storage"
 )
-
-//var (
-//	ossDomain = viper.GetString(`qiniu.QINIU_DOMAIN`)
-//	accessKey = viper.GetString(`qiniu.QINIU_ACCESS_KEY`)
-//	secretKey = viper.GetString(`qiniu.QINIU_SECRET_KEY`)
-//	bucket    = viper.GetString(`qiniu.QINIU_TEST_BUCKET`)
-//)
 
 type UploadTokenService struct{}
 type MyPutRet struct {
@@ -29,11 +21,10 @@ type MyPutRet struct {
 //文档：https://developer.qiniu.com/kodo/sdk/1238/go#1
 // UploadQiNiuYun 上传文件到七牛云
 func (service *UploadTokenService) UploadQiNiuYun(filePath string, key string) (url string, err error) {
-
-	ossDomain := viper.GetString(`qiniu.QINIU_DOMAIN`)
-	accessKey := viper.GetString(`qiniu.QINIU_ACCESS_KEY`)
-	secretKey := viper.GetString(`qiniu.QINIU_SECRET_KEY`)
-	bucket := viper.GetString(`qiniu.QINIU_TEST_BUCKET`)
+	ossDomain := ViperConfig.QNY.QINIU_DOMAIN
+	accessKey := ViperConfig.QNY.QINIU_ACCESS_KEY
+	secretKey := ViperConfig.QNY.QINIU_SECRET_KEY
+	bucket := ViperConfig.QNY.QINIU_TEST_BUCKET
 
 	// 简单上传凭证
 	putPolicy := storage.PutPolicy{
@@ -43,6 +34,7 @@ func (service *UploadTokenService) UploadQiNiuYun(filePath string, key string) (
 	// 设置上传凭证有效期
 	putPolicy.Expires = 7200 //2小时有效期
 	mac := auth.New(accessKey, secretKey)
+	fmt.Println("accessKey: " + accessKey)
 	cfg := storage.Config{}
 	//七牛云存储空间设置首页有存储区域
 	cfg.Zone = &storage.ZoneHuadong

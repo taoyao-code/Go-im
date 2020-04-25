@@ -16,6 +16,7 @@ var userService server.UserService
 // 登录
 /**
 @api {post} /user/login 登录
+@apiName Login
 @apiGroup 登录
 @apiParam {String} [mobile='123546'] mobile 账号
 @apiParam {String} passwd 密码
@@ -102,27 +103,27 @@ func UserRegister(w http.ResponseWriter, r *http.Request) {
 
 //修改用户数据
 /**
-@api {get} /user/:id Request User information
+@api {post} /user/updateUser 修改用户数据
 @apiName GetUser
-@apiGroup User
-@apiParam {Number} id Users unique ID.
-@apiSuccess {String} firstname Firstname of the User.
-@apiSuccess {String} lastname  Lastname of the User.
+@apiGroup 用户
+@apiParam {Number} userid Users unique ID.
+@apiSuccess {String} avatar 头像.
 @apiSuccessExample Success-Response:
 HTTP/1.1 200 OK
 {
-   "firstname": "John",
-   "lastname": "Doe"
+	"code": 0,
+	"data": "",
+	"msg": "xxx"
 }
 @apiError UserNotFound The id of the User was not found.
 
 @apiErrorExample Error-Response:
 HTTP/1.1 404 Not Found
 {
-   "error": "UserNotFound"
+	"code": -1,
+	"msg": "xxx"
 }
 */
-
 func UpdateUserInfo(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	userid := r.PostForm.Get("userid")
