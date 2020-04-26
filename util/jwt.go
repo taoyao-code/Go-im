@@ -10,14 +10,6 @@ import (
 	"github.com/dgrijalva/jwt-go"
 )
 
-//func main() {
-//	http.HandleFunc("/auth", authHandler)
-//	http.HandleFunc("/", JWTAuthMiddleware)
-//	if err := http.ListenAndServe(":8083", nil); err != nil {
-//		log.Fatal(err)
-//	}
-//}
-
 // MyClaims 自定义声明结构体并内嵌jwt.StandardClaims
 // jwt包自带的jwt.StandardClaims只包含了官方字段
 // 我们这里需要额外记录一个username字段，所以要自定义结构体
@@ -29,7 +21,7 @@ type MyClaims struct {
 
 const TokenExpireDuration = time.Hour * 2 // 2小时
 
-var MySecret = "夏天夏天悄悄过去"
+var MySecret = []byte("夏天夏天悄悄过去")
 
 // GenToken 生成JWT
 func GenToken(username string) (string, error) {
@@ -43,7 +35,7 @@ func GenToken(username string) (string, error) {
 	}
 	// 使用指定的签名方法创建签名对象
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, c)
-	if MySecret == "" {
+	if len(MySecret) == 0 {
 		return "", errors.New("token_key为空")
 	}
 	// 使用指定的secret签名并获得完整的编码后的字符串token
@@ -88,12 +80,12 @@ func JWTAuthMiddleware(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	authHeader := r.Header.Get("Authorization")
 	if authHeader == "" {
-		io.WriteString(w, `{"error":"请求头中auth为空"}`)
+		io.WriteString(w, `{"code":-2,"msg":"token不存在"}`)
 		return
 	}
 	mc, err := ParseToken(authHeader)
 	if err != nil {
-		io.WriteString(w, `{"error":"无效的Token"}`)
+		io.WriteString(w, `{"code":-3,"msg":"无效的Token"}`)
 		return
 	}
 	fmt.Println(mc.Username)

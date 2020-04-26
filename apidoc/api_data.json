@@ -230,7 +230,7 @@
   },
   {
     "type": "post",
-    "url": "/user/register",
+    "url": "/index/user/register",
     "title": "注册",
     "group": "注册",
     "parameter": {
@@ -328,16 +328,16 @@
     "version": "0.0.0",
     "filename": "C:/Users/c/Desktop/reptile-go/ctrl/user.go",
     "groupTitle": "注册",
-    "name": "PostUserRegister",
+    "name": "PostIndexUserRegister",
     "sampleRequest": [
       {
-        "url": "http://127.0.0.1:8081/user/register"
+        "url": "http://127.0.0.1:8081/index/user/register"
       }
     ]
   },
   {
     "type": "get",
-    "url": "/getCaptcha",
+    "url": "/index/getCaptcha",
     "title": "获取验证码",
     "name": "registered",
     "group": "注册",
@@ -396,7 +396,7 @@
     "groupTitle": "注册",
     "sampleRequest": [
       {
-        "url": "http://127.0.0.1:8081/getCaptcha"
+        "url": "http://127.0.0.1:8081/index/getCaptcha"
       }
     ]
   },
@@ -469,7 +469,7 @@
   },
   {
     "type": "post",
-    "url": "/user/login",
+    "url": "/index/user/login",
     "title": "登录",
     "name": "Login",
     "group": "登录",
@@ -555,7 +555,7 @@
     "groupTitle": "登录",
     "sampleRequest": [
       {
-        "url": "http://127.0.0.1:8081/user/login"
+        "url": "http://127.0.0.1:8081/index/user/login"
       }
     ]
   },

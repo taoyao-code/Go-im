@@ -15,7 +15,7 @@ var userService server.UserService
 
 // 登录
 /**
-@api {post} /user/login 登录
+@api {post} /index/user/login 登录
 @apiName Login
 @apiGroup 登录
 @apiParam {String} [mobile='123546'] mobile 账号
@@ -46,14 +46,16 @@ func UserLogin(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			util.RespFail(w, err.Error())
 		} else {
-			util.RespOk(w, user, "")
+			// token
+			tokenString, _ := util.GenToken(user.Mobile)
+			util.RespOk(w, user, tokenString)
 		}
 	}
 }
 
 // 注册
 /**
-@api {post} /user/register 注册
+@api {post} /index/user/register 注册
 @apiGroup 注册
 @apiParam {String} [mobile='123546'] mobile 账号
 @apiParam {String} passwd 密码
@@ -138,7 +140,7 @@ func UpdateUserInfo(w http.ResponseWriter, r *http.Request) {
 }
 
 /**
- * @api {get} /getCaptcha 获取验证码
+ * @api {get} /index/getCaptcha 获取验证码
  * @apiName registered
  * @apiGroup 注册
  * @apiSuccess {Number} code 状态码.
