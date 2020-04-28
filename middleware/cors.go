@@ -30,15 +30,18 @@ func JWTAuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "application/json")
 		r.ParseForm()
-		//authHeader := r.Header.Get("Authorization")
-		authHeader := r.Form.Get("Authorization")
+		//authHeader := r.Header.Get("Authorization") // 头信息中的
+		authHeader := r.Form.Get("Authorization") // 路由中的
 		if authHeader == "" {
+			w.WriteHeader(http.StatusBadRequest)
 			io.WriteString(w, `{"code":-2,"msg":"token不存在"}`)
 			return
 		}
 		_, err := util.ParseToken(authHeader)
 		if err != nil {
-			io.WriteString(w, `{"code":-3,"msg":"无效的Token"}`)
+			//w.WriteHeader(http.StatusUnauthorized)
+			w.WriteHeader(http.StatusBadRequest)
+			io.WriteString(w, `{"code":-3,"msg":`+err.Error()+`}`)
 			return
 		}
 		// 调用下一个中间件或者最终的handler处理程序

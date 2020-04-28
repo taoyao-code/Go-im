@@ -52,9 +52,10 @@ func ParseToken(tokenString string) (*MyClaims, error) {
 		return nil, err
 	}
 	if claims, ok := token.Claims.(*MyClaims); ok && token.Valid { // 校验token
+		//fmt.Println(claims)
 		return claims, nil
 	}
-	return nil, errors.New("无效令牌")
+	return nil, errors.New("令牌无效")
 }
 
 // AuthHandler: 获取Token
@@ -65,7 +66,6 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 	username := r.Form.Get("username")
 	password := r.Form.Get("password")
 	if username != "myusername" || password != "mypassword" {
-		w.WriteHeader(http.StatusUnauthorized)
 		io.WriteString(w, `{"error":"账号或密码错误"}`)
 		return
 	}
@@ -78,13 +78,16 @@ func AuthHandler(w http.ResponseWriter, r *http.Request) {
 func JWTAuthMiddleware(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json")
 	r.ParseForm()
-	authHeader := r.Header.Get("Authorization")
+	//authHeader := r.Header.Get("Authorization")	// 头信息中的
+	authHeader := r.Form.Get("Authorization") // 路由中的
 	if authHeader == "" {
+		w.WriteHeader(http.StatusBadRequest)
 		io.WriteString(w, `{"code":-2,"msg":"token不存在"}`)
 		return
 	}
 	mc, err := ParseToken(authHeader)
 	if err != nil {
+		w.WriteHeader(http.StatusUnauthorized)
 		io.WriteString(w, `{"code":-3,"msg":"无效的Token"}`)
 		return
 	}

@@ -47,7 +47,7 @@ func RegisterRoutes(r *mux.Router) {
 	authRouter.HandleFunc("/message/chathistory", ctrl.ChatHistory).Methods(http.MethodPost) // 获取聊天记录
 
 	//RegisterView()
-	//authRouter.HandleFunc("/", util.JWTAuthMiddleware).Methods("POST") // 验证tokne
+	authRouter.HandleFunc("/", util.JWTAuthMiddleware).Methods("POST") // 验证tokne
 }
 
 /**
@@ -56,7 +56,7 @@ func RegisterRoutes(r *mux.Router) {
 *   @apiError (客户端错误) 400-BadRequest 请求信息有误，服务器不能或不会处理该请求
 *   @apiError (服务端错误) 500-ServerError 服务器遇到了一个未曾预料的状况，导致了它无法完成对请求的处理。
 *   @apiErrorExample {json} BadRequest
-*	HTTP/1.1 401 BadRequest
+*	HTTP/1.1 400 BadRequest
 *	{
 *		"msg": "请求信息有误",
 *		"code": -1,
