@@ -6,6 +6,8 @@ import (
 	"reptile-go/config"
 	"reptile-go/model"
 
+	"github.com/importcjj/sensitive"
+
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
 
@@ -61,4 +63,15 @@ func init() {
 		new(model.Community),
 		new(model.Message))
 	fmt.Println("init data base ok")
+}
+
+// 敏感词典
+var Filter *sensitive.Filter
+
+func init() {
+	Filter = sensitive.New()
+	err := Filter.LoadWordDict("./dict/sensitive.txt")
+	if err != nil {
+		fmt.Println(err)
+	}
 }

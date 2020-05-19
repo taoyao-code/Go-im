@@ -14,7 +14,6 @@ import (
 // RegisterRoutes 路由
 func RegisterRoutes(r *mux.Router) {
 	// 1. 提供静态资源目录支持
-	//http.Handle("/asset/", http.FileServer(http.Dir(".")))
 	r.Handle("/apidoc/", http.FileServer(http.Dir(".")))
 	r.Handle("/mnt/", http.FileServer(http.Dir(".")))
 
@@ -33,7 +32,7 @@ func RegisterRoutes(r *mux.Router) {
 
 	// 需要验证Token
 	authRouter := r.PathPrefix("/").Subrouter()
-	authRouter.Use(middleware.JWTAuthMiddleware)
+	authRouter.Use(middleware.JWTAuthMiddleware, middleware.AccessLogging)
 
 	authRouter.HandleFunc("/contact/addfriend", ctrl.Addfriend).Methods(http.MethodPost)   // 添加好友
 	authRouter.HandleFunc("/contact/loadfriend", ctrl.LoadFriend).Methods(http.MethodPost) // 加载好友列表

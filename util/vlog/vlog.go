@@ -20,7 +20,7 @@ func init() {
 func initErrorLog() {
 	ErrorLog = logrus.New()
 	ErrorLog.SetFormatter(&logrus.JSONFormatter{})
-	file, err := os.OpenFile(errorLogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
+	file, err := os.OpenFile(errorLogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0777)
 	if err != nil {
 		panic(err)
 	}
@@ -30,7 +30,7 @@ func initErrorLog() {
 func initAccessLog() {
 	AccessLog = logrus.New()
 	AccessLog.SetFormatter(&logrus.JSONFormatter{})
-	file, err := os.OpenFile(accessLogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0755)
+	file, err := os.OpenFile(accessLogFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0777)
 	if err != nil {
 		panic(err)
 	}

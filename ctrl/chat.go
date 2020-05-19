@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"reptile-go/model"
 	"reptile-go/server"
+	"reptile-go/validates"
 	"strconv"
 	"sync"
 	"time"
@@ -126,6 +127,10 @@ func dispatch(data []byte) {
 		}).Warn(err.Error())
 		return
 	}
+	b := validates.VerificationFilter(msg.Content)
+	if b {
+		msg.Cmd = model.CMD_FILTER
+	}
 	// TODO 根据cmd对逻辑进行处理
 	switch msg.Cmd {
 	case model.CMD_HEART:
@@ -156,6 +161,9 @@ func dispatch(data []byte) {
 	case model.CMD_NEW_FRIEND:
 		// 通知新朋友添加
 		sendMsg(msg.Dstid, data)
+	case model.CMD_FILTER:
+		// 敏感信息,过滤掉，并返回发送人提示
+		sendMsg(msg.Userid, []byte(`{"dstid":`+strconv.FormatInt(msg.Dstid, 10)+`,"cmd":`+strconv.Itoa(model.CMD_FILTER)+`}`))
 	}
 }
 

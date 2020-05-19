@@ -37,15 +37,15 @@ func (rec *ResponseWithRecorder) Write(d []byte) (n int, err error) {
 func AccessLogging(f http.Handler) http.Handler {
 	// 创建一个新的handler包装http.HandlerFunc
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		buf := new(bytes.Buffer)
-		buf.ReadFrom(r.Body)
+		//buf := new(bytes.Buffer)
+		//buf.ReadFrom(r.Body)
 		logEntry := vlog.AccessLog.WithFields(logrus.Fields{
 			"ip":     r.RemoteAddr,
 			"method": r.Method,
 			"path":   r.RequestURI,
 			"query":  r.URL.RawQuery,
 			//"request_body": buf.String(),
-			//"request_body": r.Body,
+			"request_body": r.PostForm.Encode(),
 		})
 		wc := &ResponseWithRecorder{
 			ResponseWriter: w,

@@ -13,9 +13,9 @@ func init() {
 	Client = redis.NewClient(&redis.Options{
 		Addr:         ViperConfig.Redis.Address,
 		Password:     ViperConfig.Redis.Password,
-		PoolSize:     1000, // 池子
-		ReadTimeout:  time.Millisecond * time.Duration(100),
-		WriteTimeout: time.Millisecond * time.Duration(100),
+		PoolSize:     1000,                                 // 池子
+		ReadTimeout:  10 * time.Second,                     // 10秒
+		WriteTimeout: 10 * time.Second,                     // 10秒
 		IdleTimeout:  time.Millisecond * time.Duration(60), // 空闲超时
 	})
 	_, err := Client.Ping().Result()

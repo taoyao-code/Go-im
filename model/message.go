@@ -24,6 +24,7 @@ const (
 	CMD_HEART      = 0  // 心跳消息,不处理
 	CMD_LOGIN      = 1  // 登录
 	CMD_QUIT       = 2  // 退出
+	CMD_FILTER     = 3  // 敏感信息
 )
 
 const (

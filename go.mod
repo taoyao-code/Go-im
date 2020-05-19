@@ -27,10 +27,12 @@ require (
 	github.com/gorilla/mux v1.6.2
 	github.com/gorilla/websocket v1.4.1
 	github.com/imdario/mergo v0.3.9 // indirect
+	github.com/importcjj/sensitive v0.0.0-20200106142752-42d1c505be7b
 	github.com/julienschmidt/httprouter v1.3.0 // indirect
 	github.com/mailru/easyjson v0.7.1 // indirect
 	github.com/mattn/go-colorable v0.1.6 // indirect
 	github.com/mojocn/base64Captcha v1.3.1
+	github.com/nsqio/go-nsq v1.0.8
 	github.com/pelletier/go-toml v1.7.0 // indirect
 	github.com/prometheus/common v0.4.0
 	github.com/qiniu/api.v7/v7 v7.4.1
