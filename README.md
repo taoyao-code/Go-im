@@ -57,9 +57,3 @@ https://github.com/ltsj404/chat-im.git
 ```
 个人项目，知识有限，欢迎 issue
 ```
-后续请自行扩展
-
-原项目参考：
-```
-https://github.com/winlion/chat
-```
