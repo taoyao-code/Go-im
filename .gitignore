@@ -1,5 +1,5 @@
 # Binaries for programs and plugins
-*.exe
+
 *.exe~
 *.dll
 *.so
@@ -20,7 +20,6 @@ view/*
 asset/*
 config/config.yaml
 mnt/*
-reptile-go
 stopPort.sh
 startPort.sh
 tmp
