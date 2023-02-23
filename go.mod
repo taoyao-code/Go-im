@@ -21,9 +21,6 @@ require (
 	github.com/qiniu/api.v7/v7 v7.4.1
 	github.com/sirupsen/logrus v1.2.0
 	github.com/spf13/viper v1.6.3
-	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9 // indirect
-	golang.org/x/net v0.0.0-20200324143707-d3edc9973b7e // indirect
-	golang.org/x/sys v0.0.0-20200413165638-669c56c373c4 // indirect
-	golang.org/x/text v0.3.2 // indirect
+	golang.org/x/text v0.3.8 // indirect
 	gopkg.in/fatih/set.v0 v0.2.1
 )
