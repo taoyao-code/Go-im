@@ -15,12 +15,11 @@ require (
 	github.com/gorilla/mux v1.6.2
 	github.com/gorilla/websocket v1.4.1
 	github.com/importcjj/sensitive v0.0.0-20200106142752-42d1c505be7b
-	github.com/mojocn/base64Captcha v1.3.1
+	github.com/mojocn/base64Captcha v1.3.6
 	github.com/pelletier/go-toml v1.7.0 // indirect
 	github.com/prometheus/common v0.4.0
 	github.com/qiniu/api.v7/v7 v7.4.1
 	github.com/sirupsen/logrus v1.2.0
 	github.com/spf13/viper v1.6.3
-	golang.org/x/text v0.3.8 // indirect
 	gopkg.in/fatih/set.v0 v0.2.1
 )
