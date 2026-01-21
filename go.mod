@@ -19,7 +19,7 @@ require (
 	github.com/pelletier/go-toml v1.7.0 // indirect
 	github.com/prometheus/common v0.4.0
 	github.com/qiniu/api.v7/v7 v7.4.1
-	github.com/sirupsen/logrus v1.2.0
+	github.com/sirupsen/logrus v1.8.3
 	github.com/spf13/viper v1.6.3
 	gopkg.in/fatih/set.v0 v0.2.1
 )
